@@ -1,36 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="manifest" href="./manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>hEllo world Web Page</title>
+    <title>Hello World Button Interaction</title>
     <style>
+        /* Basic styling for the body to center the content */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
+            background-color: #e9efff; /* Light blue background */
             color: #333;
         }
-        h1 {
-            color: #007bff; /* A nice blue color */
+
+        /* Container for the button to give it some padding and shadow */
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            padding: 40px 60px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Styling for the Hello World button */
+        #helloWorldButton {
+            padding: 18px 35px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #ffffff;
+            background-color: #007bff; /* Primary blue color */
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            outline: none;
+            transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+        }
+
+        #helloWorldButton:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+        }
+
+        #helloWorldButton:active {
+            transform: translateY(2px); /* Slight press effect on click */
+            box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
+            background-color: #004085; /* Even darker when active */
+        }
+
+        /* Style for when the button displays "Azeem" */
+        #helloWorldButton.displaying-azeem {
+            background-color: #28a745; /* Green color for "Azeem" state */
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+        }
+
+        #helloWorldButton.displaying-azeem:hover {
+            background-color: #218838;
+        }
+
+        #helloWorldButton.displaying-azeem:active {
+            background-color: #1e7e34;
         }
     </style>
 </head>
 <body>
-    <h1>hEllo world</h1>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('./sw.js')
-          .then(function (reg) { console.log('[PWA] SW registered:', reg.scope); })
-          .catch(function (err) { console.warn('[PWA] SW registration failed:', err); });
-      });
-    }
-  </script>
+    <div class="container">
+        <button id="helloWorldButton">Hello World</button>
+    </div>
+
+    <script>
+        // Ensure the DOM is fully loaded before trying to access elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const button = document.getElementById('helloWorldButton');
+            const originalButtonText = "Hello World";
+            const temporaryButtonText = "Azeem";
+            const displayDuration = 1500; // Time in milliseconds (1.5 seconds)
+
+            // Add an event listener for the button click
+            button.addEventListener('click', () => {
+                // If the button is already displaying the temporary text,
+                // or if a timeout is already pending, do nothing to prevent
+                // multiple rapid clicks from conflicting.
+                if (button.textContent === temporaryButtonText) {
+                    return;
+                }
+
+                // Change the button's text to "Azeem"
+                button.textContent = temporaryButtonText;
+                // Add a class to change the button's appearance
+                button.classList.add('displaying-azeem');
+
+                // Set a timeout to revert the button text and style
+                setTimeout(() => {
+                    button.textContent = originalButtonText; // Change text back
+                    button.classList.remove('displaying-azeem'); // Remove temporary style
+                }, displayDuration);
+            });
+        });
+    </script>
 </body>
 </html>
