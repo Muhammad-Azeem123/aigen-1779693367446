@@ -1,121 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="manifest" href="./manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World Button Interaction</title>
+    <title>Hello World App</title>
     <style>
-        /* Basic styling for the body to center the content */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             min-height: 100vh;
             margin: 0;
-            background-color: #e9efff; /* Light blue background */
+            background-color: #f4f4f4;
             color: #333;
         }
 
-        /* Container for the button to give it some padding and shadow */
-        .container {
-            text-align: center;
-            background-color: #ffffff;
-            padding: 40px 60px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .container:hover {
-            transform: translateY(-5px);
-        }
-
-        /* Styling for the Hello World button */
-        #helloWorldButton {
-            padding: 18px 35px;
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #ffffff;
-            background-color: #007bff; /* Primary blue color */
+        #helloButton {
+            padding: 15px 30px;
+            font-size: 24px;
+            background-color: #007bff;
+            color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            outline: none;
-            transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
 
-        #helloWorldButton:hover {
-            background-color: #0056b3; /* Darker blue on hover */
-            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
+        #helloButton:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
         }
 
-        #helloWorldButton:active {
-            transform: translateY(2px); /* Slight press effect on click */
-            box-shadow: 0 2px 5px rgba(0, 123, 255, 0.2);
-            background-color: #004085; /* Even darker when active */
+        #helloButton:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
         }
 
-        /* Style for when the button displays "Azeem" */
-        #helloWorldButton.displaying-azeem {
-            background-color: #28a745; /* Green color for "Azeem" state */
-            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
-        }
-
-        #helloWorldButton.displaying-azeem:hover {
-            background-color: #218838;
-        }
-
-        #helloWorldButton.displaying-azeem:active {
-            background-color: #1e7e34;
+        #displayArea {
+            margin-top: 30px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #28a745; /* Green for the displayed text */
+            padding: 20px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            min-width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <button id="helloWorldButton">Hello World</button>
-    </div>
+
+    <button id="helloButton">Hello world</button>
+
+    <div id="displayArea">Click "Hello world" above!</div>
 
     <script>
-        // Ensure the DOM is fully loaded before trying to access elements
-        document.addEventListener('DOMContentLoaded', () => {
-            const button = document.getElementById('helloWorldButton');
-            const originalButtonText = "Hello World";
-            const temporaryButtonText = "Azeem";
-            const displayDuration = 1500; // Time in milliseconds (1.5 seconds)
+        // Get references to the button and the display area
+        const helloButton = document.getElementById('helloButton');
+        const displayArea = document.getElementById('displayArea');
 
-            // Add an event listener for the button click
-            button.addEventListener('click', () => {
-                // If the button is already displaying the temporary text,
-                // or if a timeout is already pending, do nothing to prevent
-                // multiple rapid clicks from conflicting.
-                if (button.textContent === temporaryButtonText) {
-                    return;
-                }
-
-                // Change the button's text to "Azeem"
-                button.textContent = temporaryButtonText;
-                // Add a class to change the button's appearance
-                button.classList.add('displaying-azeem');
-
-                // Set a timeout to revert the button text and style
-                setTimeout(() => {
-                    button.textContent = originalButtonText; // Change text back
-                    button.classList.remove('displaying-azeem'); // Remove temporary style
-                }, displayDuration);
-            });
+        // Add an event listener to the button
+        helloButton.addEventListener('click', function() {
+            // *** THE FIX IS HERE ***
+            // Change the text content of the displayArea to "OCTEK AI APP Builder"
+            displayArea.textContent = "OCTEK AI APP Builder";
+            // If you want to log it to the console as well:
+            console.log("Displayed: OCTEK AI APP Builder");
         });
     </script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('./sw.js')
-          .then(function (reg) { console.log('[PWA] SW registered:', reg.scope); })
-          .catch(function (err) { console.warn('[PWA] SW registration failed:', err); });
-      });
-    }
-  </script>
+
 </body>
 </html>
